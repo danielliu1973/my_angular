@@ -1,4 +1,17 @@
-//http://teropa.info/blog/2013/11/03/make-your-own-angular-part-1-scopes-and-digest.html
+var scope = new Scope();
 
-function Scope() {
-}
+scope.firstName = 'Dan';
+scope.counter = 0 ;
+scope.$watch(
+  function(scope) {return scope.firstName },
+  function(newValue, oldValue, scope) {scope.counter++;}
+);
+console.assert(scope.counter ===0);
+scope.$digest();
+console.assert(scope.counter ===1);
+scope.$digest();
+scope.$digest();
+console.assert(scope.counter ===1);
+scope.firstName = 'May';
+scope.$digest();
+console.assert(scope.counter ===2);
